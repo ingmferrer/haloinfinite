@@ -1,9 +1,9 @@
 from datetime import datetime
 from enum import Enum
+
 from dateutil.parser import parse as date_parse
 
 from haloinfinite.exceptions import TokenExpiredError
-
 
 DEFAULT_SCOPES = ["Xboxlive.signin", "Xboxlive.offline_access"]
 

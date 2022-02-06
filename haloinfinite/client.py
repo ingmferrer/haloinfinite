@@ -117,7 +117,7 @@ class HaloInfiniteAPIClient:
             params["state"] = state
         return f"{self.AUTHORITY_URL}{self.AUTH_ENDPOINT}?{urlencode(params)}"
 
-    def exchange_code(self, redirect_uri: str, code: str):
+    def exchange_code(self, redirect_uri: str, code: str) -> Response:
         data = {
             "client_id": self.client_id,
             "redirect_uri": redirect_uri,
@@ -127,7 +127,7 @@ class HaloInfiniteAPIClient:
         }
         return self._post(f"{self.AUTHORITY_URL}{self.TOKEN_ENDPOINT}", data=data)
 
-    def refresh_token(self, redirect_uri: str, refresh_token: str):
+    def refresh_token(self, redirect_uri: str, refresh_token: str) -> Response:
         data = {
             "client_id": self.client_id,
             "redirect_uri": redirect_uri,
@@ -141,7 +141,7 @@ class HaloInfiniteAPIClient:
         self._user_token = token
 
     @user_token_required
-    def get_xbox_user_token(self):
+    def get_xbox_user_token(self) -> Response:
         data = {
             "Properties": {
                 "AuthMethod": "RPS",
@@ -157,15 +157,15 @@ class HaloInfiniteAPIClient:
         self._xbox_user_token = token
 
     @xbox_user_token_required
-    def get_xsts_xbox_token(self):
+    def get_xsts_xbox_token(self) -> Response:
         return self.get_xsts_token("http://xboxlive.com")
 
     @xbox_user_token_required
-    def get_xsts_halo_token(self):
+    def get_xsts_halo_token(self) -> Response:
         return self.get_xsts_token("https://prod.xsts.halowaypoint.com/")
 
     @xbox_user_token_required
-    def get_xsts_token(self, relying_party: str):
+    def get_xsts_token(self, relying_party: str) -> Response:
         data = {
             "Properties": {"SandboxId": "RETAIL", "UserTokens": [self.xbox_user_token]},
             "RelyingParty": relying_party,
@@ -180,7 +180,7 @@ class HaloInfiniteAPIClient:
         self._xsts_halo_token = token
 
     @xsts_halo_token_required
-    def get_spartan_code(self):
+    def get_spartan_code(self) -> Response:
         data = {
             "Audience": "urn:343:s3:services",
             "MinVersion": "4",
@@ -197,12 +197,16 @@ class HaloInfiniteAPIClient:
         self._spartan_token = token
 
     @spartan_token_required
-    def get_clearance_token(self):
+    def get_clearance_token(self) -> Response:
         headers = {"x-343-authorization-spartan": self.spartan_token}
         return self._get(self.CLEARANCE_URL.format(self.xbox_user_id), headers=headers)
 
     def set_clearance_token(self, token: dict) -> None:
         self._clearance_token = token
+
+    def get_endpoints(self) -> Response:
+        url = f"https://settings.svc.halowaypoint.com/settings/hipc/e2a0a7c6-6efe-42af-9283-c2ab73250c48"
+        return self._client._get(url)
 
     def _get(self, url, **kwargs):
         return self._request("GET", url, **kwargs)

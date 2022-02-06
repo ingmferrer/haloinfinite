@@ -25,12 +25,14 @@ class SpartanTokenRequiredError(BaseError):
 class ClearanceTokenRequiredError(BaseError):
     pass
 
+
 class TokenExpiredError(BaseError):
     pass
 
 
 class UnknownError(BaseError):
     pass
+
 
 class BadRequestError(BaseError):
     pass

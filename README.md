@@ -18,7 +18,7 @@ pip install haloinfinite
 ### Client instantiation
 ```
 from haloinfinite.client import HaloInfiniteAPIClient as Client
-client = Client(client_id, client_secret)
+client = Client(client_id, client_secret, user_token=None, xbox_user_token=None, xsts_xbox_token=None, xsts_halo_token=None, spartan_token=None, clearance_token=None)
 ```
 
 ### OAuth 2.0
@@ -31,6 +31,7 @@ url = client.get_authorization_url(redirect_uri, scope=["Xboxlive.signin", "Xbox
 ```
 user_token = client.exchange_code(redirect_uri, code)
 
+# print(user_token.data)
 {
     "token_type": "bearer",
     "expires_in": 3600,
@@ -43,7 +44,17 @@ user_token = client.exchange_code(redirect_uri, code)
 
 #### Refresh user token
 ```
-response = client.refresh_token(redirect_uri, user_token["refresh_token"])
+user_token = client.refresh_token(redirect_uri, user_token["refresh_token"])
+
+# print(user_token.data)
+{
+    "token_type": "bearer",
+    "expires_in": 3600,
+    "scope": "XboxLive.signin XboxLive.offline_access",
+    "access_token": "...",
+    "refresh_token": "...",
+    "user_id": "...",
+}
 ```
 
 #### Set user token
@@ -55,6 +66,7 @@ client.set_user_token(user_token)
 ```
 xbox_user_token = client.get_xbox_user_token()
 
+# print(xbox_user_token.data)
 {
     "IssueInstant": "2022-02-06T01:00:03.6132203Z",
     "NotAfter": "2022-02-20T01:00:03.6132203Z",
@@ -72,6 +84,7 @@ client.set_xbox_user_token(token=xbox_user_token)
 ```
 xsts_xbox_token = client.get_xsts_xbox_token()
 
+# print(xsts_xbox_token.data)
 {
     "IssueInstant": "2022-02-06T01:35:40.7628209Z",
     "NotAfter": "2022-02-06T17:35:40.7628209Z",
@@ -101,6 +114,7 @@ client.set_xsts_xbox_token(token=xsts_xbox_token)
 ```
 xsts_halo_token = client.get_xsts_xbox_token()
 
+# print(xsts_halo_token.data)
 {
     "IssueInstant": "2022-02-06T01:12:27.9108457Z",
     "NotAfter": "2022-02-06T05:12:27.9108457Z",
@@ -118,6 +132,7 @@ client.set_xsts_halo_token(token=xsts_halo_token)
 ```
 spartan_token = client.get_xsts_xbox_token()
 
+# print(spartan_token.data)
 {
     "SpartanToken": "...",
     "ExpiresUtc": {"ISO8601Date": "2022-02-06T05:12:27Z"},
@@ -132,8 +147,9 @@ client.set_spartan_token(token=spartan_token)
 
 #### Get clearance token
 ```
-clearance_id = client.get_clearance_token()
+clearance_token = client.get_clearance_token()
 
+# print(clearance_token.data)
 {
     "FlightConfigurationId": "...",
 }
@@ -150,6 +166,7 @@ client.set_clearance_token(token=clearance_id)
 ```
 response = client.match.get_match_privacy()
 
+# print(response.data)
 {'MatchmadeGames': 1, 'OtherGames': 2}
 ```
 
@@ -157,6 +174,7 @@ response = client.match.get_match_privacy()
 ```
 response = client.match.get_match_count()
 
+# print(response.data)
 {'CustomMatchesPlayedCount': 6, 'MatchesPlayedCount': 885, 'MatchmadeMatchesPlayedCount': 879, 'LocalMatchesPlayedCount': 0}
 ```
 
@@ -164,6 +182,7 @@ response = client.match.get_match_count()
 ```
 response = client.match.get_match_history()
 
+# print(response.data)
 {'Count': 25,
  'Links': {},
  'ResultCount': 25,
@@ -204,6 +223,7 @@ response = client.match.get_match_history()
 ```
 response = client.match.get_match_stats(match_id)
 
+# print(response.data)
 {'MatchId': '...',
  'MatchInfo': {'ClearanceId': '...',
                'Duration': 'PT9M22.8961519S',
@@ -237,6 +257,7 @@ response = client.match.get_match_stats(match_id)
 ```
 response = client.match.get_match_skill(match_id, player_id)
 
+# print(response.data)
 {'Value': [{'Id': 'xuid(...)',
             'Result': {'Counterfactuals': {'SelfCounterfactuals': {'Deaths': 12.38441050555862,
                                                                    'Kills': 11.805217023995946},
@@ -277,6 +298,7 @@ response = client.match.get_match_skill(match_id, player_id)
 ```
 response = client.match.get_match_progression(match_id)
 
+# print(response.data)
 {'ChallengeProgressState': [{'Id': '...',
                              'Path': 'ChallengeContent/ClientChallengeDefinitions/S1CapstoneChallenges/CSamuraiMedalKilljoy.json',
                              'PreviousProgress': 1,
@@ -291,6 +313,7 @@ response = client.match.get_match_progression(match_id)
 
 ## Requirements
 - requests
+- python-dateutil
 
 ## Tests
 - Not yet
