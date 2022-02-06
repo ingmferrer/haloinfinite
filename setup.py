@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name="haloinfinite",
-    version="0.0.1",
+    version="0.2.0",
     description="API wrapper for Halo Infinite written in Python",
     long_description=read("README.md"),
     url="https://github.com/ingmferrer/haloinfinite",
@@ -19,6 +19,7 @@ setup(
     packages=["haloinfinite"],
     install_requires=[
         "requests",
+        "python-dateutil",
     ],
     zip_safe=False,
 )

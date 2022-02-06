@@ -130,18 +130,18 @@ spartan_token = client.get_xsts_xbox_token()
 client.set_spartan_token(token=spartan_token)
 ```
 
-#### Get clearance id
+#### Get clearance token
 ```
-clearance_id = client.get_clearance()
+clearance_id = client.get_clearance_token()
 
 {
-    "FlightConfigurationId": "af0caadc-1733-4f21-b9d6-bb6956741d7d",
+    "FlightConfigurationId": "...",
 }
 ```
 
-#### Set clearance id
+#### Set clearance token
 ```
-client.set_clearance_id(token=clearance_id)
+client.set_clearance_token(token=clearance_id)
 ```
 
 ## Match API
