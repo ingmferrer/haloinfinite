@@ -10,8 +10,21 @@ You need to [register an Azure Active Directory application](https://docs.micros
 Credits to [Den Delimarsky](https://github.com/dend) for the reverse-engineering. If you want to learn more then check his [Halo Infinite Web API blog series](https://den.dev/series/halo-infinite-web-api). Also you can use his [API wrapper written in C#](https://github.com/dend/grunt).
 
 ## Installing
+#### From Pip (recommended)
 ```
 pip install haloinfinite
+```
+
+#### From Github
+```
+pip install git+https://github.com/ingmferrer/haloinfinite.git
+```
+
+#### From tar.gz file
+Download haloinfinite-X.Y.Z.tar.gz from the [Releases page](https://github.com/ingmferrer/haloinfinite/releases).
+
+```
+pip install haloinfinite-X.Y.Z.tar.gz
 ```
 
 ## Usage
